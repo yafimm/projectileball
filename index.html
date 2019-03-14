@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Pemodelan Simulasi</title>
+  </head>
+  <body>
+    <span>V : <input type="text" name="v" value=""></span>
+    <span>G : <input type="text" name="g" value=""></span>
+    <span>TETA : <input type="text" name="teta" value=""></span>
+    <span>T : <input type="text" name="t" value=""></span>
+    <input type="submit" name="submit" value="Submit">
+
+
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+      var v, g, teta, t;
+
+      $("input[name=submit]").click(function(){
+        proses();
+      });
+
+
+      function proses(){
+        v = $("input[name=v]").val();
+        g = $("input[name=g]").val();
+        teta = $("input[name=teta]").val();
+        t = $("input[name=t]").val();
+
+        alert(v);
+      }
+
+
+    </script>
+  </body>
+</html>
