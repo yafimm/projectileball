@@ -14,21 +14,87 @@
 
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-      var v, g, teta, t;
+      var V, V0,  g, teta, T;
+      var g = 10; // percepatan gravitasi
 
       $("input[name=submit]").click(function(){
         proses();
+
+        teta = derajatToRadians(teta);
+        // iterasi
+
+        var Vx = VsumbuX(V0, teta);
+        var Vy = VsumbuY(V0, teta, T);
+
+        V = kecepatan(Vx, Vy);
+
+        var x = jarakTempuhX(V0, teta, T);
+        var y = jarakTempuhY(V0, teta, g, T);
+
+        var Tp = waktuPuncak(V0, teta, g);
+        var Hmaks = ketinggianMaksimum(V0, teta, g);
+        var Xmaks = jarakMaksimum(V0, teta);
+
+        console.log("Sumbu Vx = " + Vx);
+        console.log("Sumbu Vy = " + Vy);
+        console.log("Kecepatan = " + V);
+        console.log("Jarak X = " + x);
+        console.log("Jarak Y = " + y);
+        console.log("Waktu Puncak di titik 0 = " + Tp);
+        console.log("Ketinggian Maksimum = " + Hmaks);
+        console.log("Jarak Maksimum = " + Xmaks);
+
+
       });
 
 
+
       function proses(){
-        v = $("input[name=v]").val();
+        v0 = $("input[name=v]").val();
         g = $("input[name=g]").val();
         teta = $("input[name=teta]").val();
-        t = $("input[name=t]").val();
-
-        alert(v);
+        T = $("input[name=t]").val();
       }
+
+      function derajatToRadians(teta){
+        return teta * (Math.PI / 180);
+      }
+
+      function VsumbuX(V0, teta){
+        return V0 * Math.cos(teta)
+      }
+
+      function VsumbuY(V0, teta, T){
+        return V0 * Math.sin(teta) - g * T;
+      }
+
+      function Kecepatan(Vx, Vy){
+        return Math.sqrt(Math.pow(Vx, 2) + Math.pow(Vy, 2));
+      }
+
+      function jarakTempuhX(V0, teta, T){
+        return V0 * T * Math.cos(teta);
+      }
+
+      function jarakTempuhY(V0, teta, g ,T){
+        return V0 * T * Math.sin(teta) - 0.5 * g * pow(T,2);
+      }
+
+      // Fungsi ini rumus buat ngitung waktu bola ada di puncak Tp
+      function waktuPuncak(teta, g){
+        return (V0 * Math.sin(teta)) / g;
+      }
+
+      // fungsi ini untuk ngitung etinggian maksimum atau Hmaks
+      function ketinggianMaksimum(){
+        return (pow(V0, 2) * pow(Math.sin(teta), 2)) / 2 * g;
+      }
+
+      // fungsi untuk menghitung jarakMaksimum atau Xmaks
+      function jarakXMaksimum(){
+        return pow(V0, 2) * Math.sin(2 * teta);
+      }
+
 
 
     </script>
