@@ -44,7 +44,7 @@
 
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-      var V, teta, T; // Deklarasi Variable, V = Kecepatan, teta = Sudut, T = Waktu yang ditempuh
+      var V, teta, sudut, T; // Deklarasi Variable, V = Kecepatan, teta = Sudut, T = Waktu yang ditempuh
       var g = 9.8; // percepatan gravitasi
 
       var totalPercobaan = 1; // Variable untuk menghitng jumlah percobaam, dimulai dari 1
@@ -73,7 +73,7 @@
           // Mengambil data kecepatan awal dan sudut pelemparannya dari inputan
           V = $("input[name=v]").val();
           teta = $("input[name=teta]").val();
-
+          sudut = teta;
           // untuk merubah nama title simulasi yang ada pada atas canvas, menjadi sesuai dengan total Percobaan nya
           $('#title-simulasi').text('Simulasi Ke -' + totalPercobaan);
 
@@ -104,11 +104,10 @@
                          '<h5 class="card-title"> Percobaan Ke - '+ totalPercobaan++ +'</h5>' +
                             "<li> t (waktu yang ditempuh) = " + Number((T).toFixed(3)) + " Detik</li>" +
                             "<li> tp (waktu yang ditempuh sampai puncak) = " + Number((Tp).toFixed(3)) + " Detik</li>" +
-                            "<li> Sumbu Vx = " + Number((Vx).toFixed(3)) + "</li>" +
-                            "<li> Sumbu Vy = " + Number((Vy).toFixed(3)) + "</li>" +
+                            "<li> Kecepatan awal x = " + Number((Vx).toFixed(3)) + " m/s</li>" +
+                            "<li> Kecepatan awal y = " + Number((Vy).toFixed(3)) + " m/s</li>" +
                             "<li> Kecepatan = " + V + " m/s</li>" +
-                            "<li> Jarak X = " + Number((x).toFixed(3)) + " Meter</li>" +
-                            "<li> Jarak Y = " + Number((y).toFixed(3)) + " Meter</li>" +
+                            "<li> Sudut = "+ sudut +"&#176;</li>"+
                             "<li> Waktu Puncak di titik 0 = " + Number((Tp).toFixed(3)) + " Detik</li>" +
                             "<li> Ketinggian Maksimum = " + Number((Hmaks).toFixed(3)) + " Meter</li>" +
                             "<li> Jarak Maksimum = " + Number((Xmaks).toFixed(3)) + " Meter</li>" +
@@ -196,18 +195,21 @@
                   ctx.fill();
 
                   // Incrementer Looping simulasi
-                  time += framePeriod / 1000;
+                  if(time != T){
+                    time += framePeriod / 1000;
+                  }
 
                   // Jika waktu simulasi belum selesai, maka panggil fungsi gambar lagi, untuk melanjutkan simulasi
-                  if ((time <= T + framePeriod*0.001) && animate){
+                  if ((time < T + framePeriod*0.001) && animate){
                     if(y > 0){
                       setTimeout(function() { draw(time, true); }, framePeriod);
                     }else{
                       return;
                     }
+                  }else if(y_pos < 0){
+                    draw(T, true);
                   }
               }
-
 
               // Panggil fungsi draw (reqursive hingga waktu tertentu) untuk membuat simulasinya
               draw(0, true);
